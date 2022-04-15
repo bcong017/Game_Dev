@@ -17,3 +17,4 @@ height	240
 10	textures\crab.png
 20	textures\misc.png
 30 	textures\Mission1.png
+40	textures\RamboDie.png

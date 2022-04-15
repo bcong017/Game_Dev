@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Platform.h"
 #include "Map.h"
+#include "Background.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -117,7 +118,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
+	case OBJECT_TYPE_GOOMBA: obj = new CCrab(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 
@@ -149,6 +150,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	break;
 	
+	case OBJECT_TYPE_BACKGROUND: obj = new Background(x, y); break;
+
 	case OBJECT_TYPE_MAP: obj = new Map(x, y); break;
 
 	default:

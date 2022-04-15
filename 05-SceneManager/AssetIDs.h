@@ -7,6 +7,7 @@
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define ID_TEX_RAMBO_DIE 30
 
 
 #define OBJECT_TYPE_MARIO	0
@@ -16,6 +17,7 @@
 #define OBJECT_TYPE_COIN	4
 #define OBJECT_TYPE_PLATFORM 5
 #define OBJECT_TYPE_MAP		100
+#define OBJECT_TYPE_BACKGROUND 101
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -80,6 +82,7 @@
 #pragma endregion 
 
 #define ID_SPRITE_MAP 9000
+#define ID_SPRITE_BACKGROUND 9500
 #define ID_SPRITE_BRICK 20000
 
 #define ID_SPRITE_GOOMBA 30000

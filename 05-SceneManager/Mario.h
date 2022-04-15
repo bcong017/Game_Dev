@@ -41,7 +41,7 @@
 #define ID_ANI_MARIO_SIT_RIGHT 900
 #define ID_ANI_MARIO_SIT_LEFT 901
 
-//#define ID_ANI_MARIO_DIE 999
+#define ID_ANI_MARIO_DIE 999
 
 #pragma endregion
 
@@ -54,6 +54,10 @@
 
 #define MARIO_BIG_BBOX_WIDTH  30
 #define MARIO_BIG_BBOX_HEIGHT 40
+
+#define MARIO_BBOX_DIE_WIDTH 56
+#define MARIO_BBOX_DIE_HEIGHT 30
+
 #define MARIO_BIG_SITTING_BBOX_WIDTH  33
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 24
 
@@ -75,7 +79,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
-	/*void OnCollisionWithGoomba(LPCOLLISIONEVENT e);*/
+	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	//int GetAniIdSmall();
@@ -99,7 +103,7 @@ public:
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return 1;
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }

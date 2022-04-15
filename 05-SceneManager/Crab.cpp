@@ -1,6 +1,6 @@
-#include "Goomba.h"
+#include "Crab.h"
 
-CGoomba::CGoomba(float x, float y):CGameObject(x, y)
+CCrab::CCrab(float x, float y):CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
@@ -8,7 +8,7 @@ CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 	SetState(GOOMBA_STATE_WALKING);
 }
 
-void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CCrab::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	if (state == GOOMBA_STATE_DIE)
 	{
@@ -26,16 +26,16 @@ void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &botto
 	}
 }
 
-void CGoomba::OnNoCollision(DWORD dt)
+void CCrab::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 };
 
-void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
+void CCrab::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return; 
-	if (dynamic_cast<CGoomba*>(e->obj)) return; 
+	if (dynamic_cast<CCrab*>(e->obj)) return; 
 
 	if (e->ny != 0 )
 	{
@@ -47,7 +47,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
-void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CCrab::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -63,7 +63,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 }
 
 
-void CGoomba::Render()
+void CCrab::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
 	if (state == GOOMBA_STATE_DIE) 
@@ -75,7 +75,7 @@ void CGoomba::Render()
 	RenderBoundingBox();
 }
 
-void CGoomba::SetState(int state)
+void CCrab::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

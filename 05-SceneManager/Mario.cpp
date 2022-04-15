@@ -4,15 +4,14 @@
 #include "Mario.h"
 #include "Game.h"
 
-//#include "Goomba.h"
+#include "Crab.h"
 
 #include "Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
-	x += vx * dt;
-	/*vx += ax * dt;*/
+	vx += ax * dt;
 
 	/*if (abs(vx) > abs(maxVx)) vx = maxVx;*/
 
@@ -49,45 +48,46 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = 0;
 	}
 
-	/*if (dynamic_cast<CGoomba*>(e->obj))
-		OnCollisionWithGoomba(e);*/
+	if (dynamic_cast<CCrab*>(e->obj))
+		OnCollisionWithGoomba(e);
 	
 	
 }
 
-//void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
-//{
-//	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-//
-//	// jump on top >> kill Goomba and deflect a bit 
-//	if (e->ny < 0)
-//	{
-//		if (goomba->GetState() != GOOMBA_STATE_DIE)
-//		{
-//			goomba->SetState(GOOMBA_STATE_DIE);
-//			vy = -MARIO_JUMP_DEFLECT_SPEED;
-//		}
-//	}
-//	else // hit by Goomba
-//	{
-//		if (untouchable == 0)
-//		{
-//			if (goomba->GetState() != GOOMBA_STATE_DIE)
-//			{
-//				if (level > MARIO_LEVEL_SMALL)
-//				{
-//					level = MARIO_LEVEL_SMALL;
-//					StartUntouchable();
-//				}
-//				else
-//				{
-//					DebugOut(L">>> Mario DIE >>> \n");
-//					SetState(MARIO_STATE_DIE);
-//				}
-//			}
-//		}
-//	}
-//}
+void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	CCrab* goomba = dynamic_cast<CCrab*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	//if (e->ny < 0)
+	//{
+	//	if (goomba->GetState() != GOOMBA_STATE_DIE)
+	//	{
+	//		goomba->SetState(GOOMBA_STATE_DIE);
+	//		vy = -MARIO_JUMP_DEFLECT_SPEED;
+	//	}
+	//}
+	//else // hit by Goomba
+	//{
+	//	if (untouchable == 0)
+	//	{
+	//		if (goomba->GetState() != GOOMBA_STATE_DIE)
+	//		{
+	//			if (level > MARIO_LEVEL_SMALL)
+	//			{
+	//				level = MARIO_LEVEL_SMALL;
+	//				StartUntouchable();
+	//			}
+	//			else
+	//			{
+	//				DebugOut(L">>> Mario DIE >>> \n");
+	//				SetState(MARIO_STATE_DIE);
+	//			}
+	//		}
+	//	}
+	//}
+	SetState(MARIO_STATE_DIE);
+}
 
 
 //
@@ -136,10 +136,12 @@ void CMario::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
-	//if (state == MARIO_STATE_DIE)
-	//	aniId = ID_ANI_MARIO_DIE;
+	if (state == MARIO_STATE_DIE)
+		aniId = ID_ANI_MARIO_DIE;
+	else
+		aniId = GetAniIdBig();
 
-	animations->Get(GetAniIdBig())->Render(x, y);
+	animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
 	
@@ -199,7 +201,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
-		vy = -MARIO_JUMP_DEFLECT_SPEED;
+		/*vy = -MARIO_JUMP_DEFLECT_SPEED;*/
 		vx = 0;
 		ax = 0;
 		break;
@@ -216,6 +218,13 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		top = y - MARIO_BIG_SITTING_BBOX_HEIGHT / 2;
 		right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 		bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
+	}
+	else if (state == MARIO_STATE_DIE)
+	{
+		left = x - MARIO_BBOX_DIE_WIDTH / 2;
+		top = y - MARIO_BBOX_DIE_HEIGHT / 2;
+		right = left + MARIO_BBOX_DIE_WIDTH;
+		bottom = top + MARIO_BBOX_DIE_HEIGHT;
 	}
 	else 
 	{
