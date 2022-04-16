@@ -8,6 +8,8 @@
 
 #include "Collision.h"
 
+CMario* CMario::__instance = NULL;
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
@@ -56,14 +58,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
-	CCrab* goomba = dynamic_cast<CCrab*>(e->obj);
+	CCrab* crab = dynamic_cast<CCrab*>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit 
+	////jump on top >> kill Goomba and deflect a bit 
 	//if (e->ny < 0)
 	//{
-	//	if (goomba->GetState() != GOOMBA_STATE_DIE)
+	//	if (crab->GetState() != GOOMBA_STATE_DIE)
 	//	{
-	//		goomba->SetState(GOOMBA_STATE_DIE);
+	//		crab->SetState(GOOMBA_STATE_DIE);
 	//		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	//	}
 	//}
@@ -143,7 +145,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 }
 
@@ -233,6 +235,21 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		right = left + MARIO_BIG_BBOX_WIDTH;
 		bottom = top + MARIO_BIG_BBOX_HEIGHT;
 	}
+}
+
+float CMario::getX()
+{
+	return x;
+}
+
+float CMario::getY()
+{
+	return y;
+}
+
+CMario* CMario::GetInstance()
+{
+	return __instance;
 }
 
 

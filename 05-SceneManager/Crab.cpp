@@ -1,4 +1,7 @@
 #include "Crab.h"
+#include "Mario.h"
+
+#include "debug.h"
 
 CCrab::CCrab(float x, float y):CGameObject(x, y)
 {
@@ -41,9 +44,9 @@ void CCrab::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vy = 0;
 	}
-	else if (e->nx != 0)
+	if (e->nx != 0)
 	{
-		vx = -vx;
+		/*vx = -vx;*/
 	}
 }
 
@@ -52,7 +55,18 @@ void CCrab::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
+	/*if (x > CMario::GetInstance()->getX())
+	{
+		if (vx > 0)
+			vx = -vx;
+	}
+	else
+	{
+		if (vx < 0)
+			vx = -vx;
+	}*/
+
+	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
