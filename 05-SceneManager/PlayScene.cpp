@@ -152,7 +152,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	
 	case OBJECT_TYPE_BACKGROUND: obj = new Background(x, y); break;
 
-	case OBJECT_TYPE_MAP: obj = new Map(x, y); break;
+	case OBJECT_TYPE_MAP: 
+	{
+		float xBWave = (float)atof(tokens[3].c_str());
+		float yBWave = (float)atof(tokens[4].c_str());
+		float xSWave = (float)atof(tokens[5].c_str());
+		float ySWave = (float)atof(tokens[6].c_str());
+		obj = new Map(x, y, xBWave, yBWave, xSWave, ySWave); 
+		break;
+	}
 
 	default:
 		DebugOut(L"[ERROR] Invalid object type: %d\n", object_type);

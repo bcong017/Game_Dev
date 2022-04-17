@@ -4,6 +4,7 @@ void Background::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_BACKGROUND)->Render(x, y);
+	
 	RenderBoundingBox();
 }
 
