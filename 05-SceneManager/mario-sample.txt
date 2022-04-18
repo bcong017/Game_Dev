@@ -1,7 +1,7 @@
 [SETTINGS]
 start	5
-width	320
-height	240
+width	1000
+height	1000
 
 #id	type	file
 # type: 0: intro, 1: play scene 
@@ -18,3 +18,4 @@ height	240
 20	textures\misc.png
 30 	textures\Mission1.png
 40	textures\RamboDie.png
+50	textures\Mini_Sub_88.png

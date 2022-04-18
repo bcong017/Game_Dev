@@ -88,7 +88,15 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	//		}
 	//	}
 	//}
-	SetState(MARIO_STATE_DIE);
+	float xx, yy;
+	crab->GetPosition(xx, yy);
+	if (state == MARIO_STATE_SHOOT_LEFT && xx < x)
+		crab->SetState(GOOMBA_STATE_DIE);
+	else if (state == MARIO_STATE_SHOOT_RIGHT && xx > x)
+		crab->SetState(GOOMBA_STATE_DIE);
+	else
+		SetState(MARIO_STATE_DIE);
+	
 }
 
 
@@ -112,12 +120,20 @@ int CMario::GetAniIdBig()
 				aniId = ID_ANI_MARIO_SIT_RIGHT;
 			else
 				aniId = ID_ANI_MARIO_SIT_LEFT;
-		}
+		} 
 		else
 			if (vx == 0)
 			{
-				if (nx > 0) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-				else aniId = ID_ANI_MARIO_IDLE_LEFT;
+				if (nx > 0)
+					if (state == MARIO_STATE_SHOOT_RIGHT)
+						aniId = ID_ANI_MARIO_SHOOT_RIGHT;
+					else
+						aniId = ID_ANI_MARIO_IDLE_RIGHT;
+				else
+					if (state == MARIO_STATE_SHOOT_LEFT)
+						aniId = ID_ANI_MARIO_SHOOT_LEFT;
+					else
+						aniId = ID_ANI_MARIO_IDLE_LEFT;
 			}
 			else if (vx > 0)
 			{
@@ -177,7 +193,13 @@ void CMario::SetState(int state)
 	case MARIO_STATE_RELEASE_JUMP:
 		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
 		break;
-
+	
+	case MARIO_STATE_SHOOT_LEFT:
+		shottingTime = GetTickCount64();
+		break;
+	case MARIO_STATE_SHOOT_RIGHT:
+		shottingTime = GetTickCount64();
+		break;
 	case MARIO_STATE_SIT:
 		if (isOnPlatform)
 		{
@@ -237,16 +259,10 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	}
 }
 
-float CMario::getX()
+int CMario::getNx()
 {
-	return x;
+	return nx;
 }
-
-float CMario::getY()
-{
-	return y;
-}
-
 CMario* CMario::GetInstance()
 {
 	return __instance;

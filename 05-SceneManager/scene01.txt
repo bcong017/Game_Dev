@@ -5,6 +5,7 @@ brick.txt
 coin.txt
 goomba.txt
 cloud.txt
+mini_sub.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -13,6 +14,9 @@ cloud.txt
 
 # MARIO
 0	20	10
+
+# SUB
+50	20	5
 
 # BRICKS
 1	0	148

@@ -6,6 +6,7 @@
 #include "Brick.h"
 #include "Mario.h"
 #include "Crab.h"
+#include "Submarine.h"
 //#include "Koopas.h"
 
 

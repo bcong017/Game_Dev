@@ -26,6 +26,9 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_SHOOT_LEFT			701
+#define MARIO_STATE_SHOOT_RIGHT			702
+#define MARIO_STATE_SHOOT_RELEASE		703
 
 #pragma region ANIMATION_ID
 
@@ -42,6 +45,10 @@
 #define ID_ANI_MARIO_SIT_LEFT 901
 
 #define ID_ANI_MARIO_DIE 999
+
+#define ID_ANI_MARIO_SHOOT_LEFT 1000
+#define ID_ANI_MARIO_SHOOT_RIGHT 1001
+
 
 #pragma endregion
 
@@ -74,7 +81,7 @@ class CMario : public CGameObject
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
-
+	ULONGLONG shottingTime;
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
@@ -92,7 +99,7 @@ public:
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
-
+		shottingTime = 0;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
@@ -117,8 +124,6 @@ public:
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	float getX();
-	float getY();
-
+	int getNx();
 	static CMario* GetInstance();
 };

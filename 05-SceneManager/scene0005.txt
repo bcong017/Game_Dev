@@ -5,7 +5,8 @@ map.txt
 mario.txt
 cloud.txt
 brick.txt
-goomba.txt
+crab.txt
+mini_sub.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -20,8 +21,10 @@ goomba.txt
 #MARIO
 0	300	10
 
+#MINI SUB
+51	300	5
 #Goomba
-#2	250	110
+2	600	110
 
 #Platform
 5	100	180	16	15	100	0	0	0

@@ -13,22 +13,19 @@
 
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
-#define GOOMBA_STATE_IDLE 300
 
-#define ID_ANI_GOOMBA_WALKING 5000
-#define ID_ANI_GOOMBA_DIE 5001
-#define ID_ANI_GOOMBA_IDLE 5002
+#define ID_ANI_SUBMARINE_SWIM 10400
 
-class CCrab : public CGameObject
+class CSub : public CGameObject
 {
 protected:
-	float ax;				
-	float ay; 
+	float ax;
+	float ay;
 
 	ULONGLONG die_start;
 
-	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
 	virtual int IsCollidable() { return 1; };
@@ -37,7 +34,7 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
-public: 	
-	CCrab(float x, float y);
+public:
+	CSub(float x, float y);
 	virtual void SetState(int state);
 };

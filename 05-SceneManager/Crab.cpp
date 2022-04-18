@@ -8,7 +8,7 @@ CCrab::CCrab(float x, float y):CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
-	SetState(GOOMBA_STATE_WALKING);
+	SetState(GOOMBA_STATE_IDLE);
 }
 
 void CCrab::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -33,6 +33,7 @@ void CCrab::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+
 };
 
 void CCrab::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -54,24 +55,15 @@ void CCrab::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-
-	/*if (x > CMario::GetInstance()->getX())
-	{
-		if (vx > 0)
-			vx = -vx;
-	}
-	else
-	{
-		if (vx < 0)
-			vx = -vx;
-	}*/
-
+	float xx, yy;
+	CMario::GetInstance()->GetPosition(xx, yy);
+	if (abs(xx - x) <= 100)
+		SetState(GOOMBA_STATE_WALKING);
 	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
 	}
-
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -79,7 +71,12 @@ void CCrab::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CCrab::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
+	int aniId = -1;
+	if (vx == 0)
+		aniId = ID_ANI_GOOMBA_IDLE;
+	else
+		aniId = ID_ANI_GOOMBA_WALKING;
+	
 	if (state == GOOMBA_STATE_DIE) 
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
@@ -102,7 +99,18 @@ void CCrab::SetState(int state)
 			ay = 0; 
 			break;
 		case GOOMBA_STATE_WALKING: 
-			vx = -GOOMBA_WALKING_SPEED;
+			float xx, yy;
+			CMario::GetInstance()->GetPosition(xx, yy);
+			if (x > xx)
+			{
+				vx = -GOOMBA_WALKING_SPEED;
+			}
+			else
+				vx = GOOMBA_WALKING_SPEED;
+			break;
+		case GOOMBA_STATE_IDLE:
+			ax = 0;
+			vx = 0;
 			break;
 	}
 }

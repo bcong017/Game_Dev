@@ -1,9 +1,7 @@
 #pragma once
 
 //
-// This file contains all IDs of game assets 
-//
-
+// This file contains all IDs of game assets data
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
@@ -11,6 +9,7 @@
 
 
 #define OBJECT_TYPE_MARIO	0
+
 #define OBJECT_TYPE_BRICK	1
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
@@ -20,6 +19,9 @@
 #define OBJECT_TYPE_BACKGROUND 101
 
 #define OBJECT_TYPE_PORTAL	50
+
+#define OBJECT_TYPE_SUBMARINE	51
+
 
 
 #pragma region MARIO 
@@ -87,6 +89,8 @@
 #define ID_SPRITE_BIG_WAVE 9100
 #define ID_SPRITE_SMALL_WAVE 9200
 
+#define ID_SPRITE_SUBMARINE 10000
+#define ID_SPRITE_SUBMARINE_SWIMMING (ID_SPRITE_SUBMARINE + 1000)
 
 #define ID_SPRITE_GOOMBA 30000
 #define ID_SPRITE_GOOMBA_WALK (ID_SPRITE_GOOMBA + 1000)
