@@ -15,9 +15,9 @@ void CCrab::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
 	if (state == GOOMBA_STATE_DIE)
 	{
-		left = x - GOOMBA_BBOX_WIDTH/2;
+		left = x - GOOMBA_BBOX_WIDTH_DIE/2;
 		top = y - GOOMBA_BBOX_HEIGHT_DIE/2;
-		right = left + GOOMBA_BBOX_WIDTH;
+		right = left + GOOMBA_BBOX_WIDTH_DIE;
 		bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
 	}
 	else
@@ -57,13 +57,16 @@ void CCrab::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vx += ax * dt;
 	float xx, yy;
 	CMario::GetInstance()->GetPosition(xx, yy);
-	if (abs(xx - x) <= 100)
-		SetState(GOOMBA_STATE_WALKING);
+	
 	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
 		return;
-	}
+	}						
+
+	if (abs(xx - x) <= 100 && state != GOOMBA_STATE_DIE)
+		SetState(GOOMBA_STATE_WALKING);
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
